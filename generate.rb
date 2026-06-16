@@ -87,7 +87,7 @@ end
 if camera_items.any?
   html << <<~HTML
         <li>
-          Trattenimenti da Camera
+          Trattenimenti da Villa
           <ol>
   HTML
 
