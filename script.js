@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isHidden) {
         translation.removeAttribute("hidden");
-        button.textContent = "Nascondi traduzione tedesca";
+        button.textContent = "Deutsche Übersetzung ausblenden";
       } else {
         translation.setAttribute("hidden", "");
-        button.textContent = "Mostra traduzione tedesca";
+        button.textContent = "Deutsche Übersetzung anzeigen";
       }
     });
   });
