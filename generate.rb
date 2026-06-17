@@ -30,6 +30,33 @@ def slug(key)
   key.gsub(/^\d+-?/, "").gsub(/[^a-zA-Z0-9]+/, "-").downcase
 end
 
+def gen_item_html(item, subpoem=false)
+  heading = subpoem ? "h3" : "h2"
+  html = <<~HTML
+
+    <article class="poem" id="#{item[:id]}">
+      <#{heading}>#{CGI.escapeHTML(item[:title])}</#{heading}>
+
+      <button class="toggle-translation" type="button">
+        Deutsche Übersetzung anzeigen
+      </button>
+
+      <div class="text original">
+        <p>
+#{item[:original]}
+        </p>
+      </div>
+
+      <div class="text translation" hidden>
+        <p>
+#{item[:translation]}
+        </p>
+      </div>
+    </article>
+  HTML
+  html
+end
+
 regular_items = []
 camera_items = []
 
@@ -74,7 +101,7 @@ html = <<~HTML
     </header>
 
     <nav class="index">
-      <h2>Index</h2>
+      <h2>Inhaltsverzeichnis</h2>
       <ol>
 HTML
 
@@ -108,6 +135,7 @@ html << <<~HTML
     </nav>
 HTML
 
+=begin
 (regular_items + camera_items).each do |item|
   html << <<~HTML
 
@@ -131,6 +159,17 @@ HTML
       </div>
     </article>
   HTML
+end
+=end
+
+(regular_items).each do |item|
+  html << gen_item_html(item)
+end
+
+html<< "<hr><h2>Trattenimenti da Villa</h2>"
+
+(camera_items).each do |item|
+  html << gen_item_html(item, true)
 end
 
 html << <<~HTML
