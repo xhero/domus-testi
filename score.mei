@@ -17,16 +17,6 @@
          <mdiv>
             <score>
                <scoreDef>
-                  <pgHead func="first">
-                     <rend halign="center" valign="top">
-                        <rend type="title" fontsize="x-large">XX. Danza di Ninfe, e Pastori</rend>
-                        <lb />
-                        <rend type="subtitle" fontsize="large">Ballo intrecciato</rend>
-                     </rend>
-                     <rend halign="right" valign="bottom">
-                        <rend type="composer">Adriano Banchieri</rend>
-                     </rend>
-                  </pgHead>
                   <staffGrp>
                      <staffGrp symbol="bracket">
                         <staffDef n="1" lines="5" meter.count="3" meter.unit="2">
@@ -155,7 +145,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="dkkq8il" type="mscore-system-text" startid="#n1z0qu4v">TUTTI</dir>
                   </measure>
                   <measure xml:id="m1nz4gco" n="2">
                      <staff xml:id="m2s1" n="1">
@@ -1559,7 +1548,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="dirpnym" type="mscore-system-text" startid="#m1mq5t1x" color="#919191">SOLI</dir>
                   </measure>
                   <measure xml:id="m10dicc2" n="18">
                      <staff xml:id="m18s1" n="1">
@@ -2132,7 +2120,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d130dyw8" type="mscore-system-text" startid="#n12xffnv">TUTTI</dir>
                   </measure>
                   <measure xml:id="m1ayi80g" n="26">
                      <staff xml:id="m26s1" n="1">
@@ -2418,7 +2405,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d1juvzj1" type="mscore-system-text" startid="#m13e7kj" color="#919191">SOLI</dir>
                   </measure>
                   <measure xml:id="m18bwl1t" n="30">
                      <staff xml:id="m30s1" n="1">
@@ -2991,7 +2977,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d36yigx" type="mscore-system-text" startid="#n1yy2tcw">TUTTI</dir>
                   </measure>
                   <measure xml:id="m8tn0y6" n="38">
                      <staff xml:id="m38s1" n="1">
@@ -3277,7 +3262,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d1dz1rg2" type="mscore-system-text" startid="#mxuhsj8" color="#919191">SOLI</dir>
                   </measure>
                   <measure xml:id="mjyyoir" n="42">
                      <staff xml:id="m42s1" n="1">
@@ -3850,7 +3834,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d1vk5t4" type="mscore-system-text" startid="#n11xkwg3">TUTTI</dir>
                   </measure>
                   <measure xml:id="m3r6cl6" n="50">
                      <staff xml:id="m50s1" n="1">
@@ -4137,7 +4120,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d5wc7y" type="mscore-system-text" startid="#m1bkz493" color="#919191">SOLI</dir>
                   </measure>
                   <measure xml:id="mcmfxdy" n="54">
                      <staff xml:id="m54s1" n="1">
@@ -4709,7 +4691,6 @@
                            </note>
                         </layer>
                      </staff>
-                     <dir xml:id="d1a9wb00" type="mscore-system-text" startid="#n1kzzzyg">TUTTI</dir>
                   </measure>
                   <measure xml:id="mv2upv1" n="62">
                      <staff xml:id="m62s1" n="1">
