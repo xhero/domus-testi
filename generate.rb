@@ -37,15 +37,23 @@ def gen_item_html(item, subpoem=false)
     <article class="poem" id="#{item[:id]}">
       <#{heading}>#{CGI.escapeHTML(item[:title])}</#{heading}>
 
-      <button class="toggle-translation" type="button">
-        Deutsche Übersetzung anzeigen
-      </button>
+        <div class="poem-author">
+          #{CGI.escapeHTML(item[:author] ? item[:author] : "")}
+        </div>
+
+        <div class="poem-book">
+          #{CGI.escapeHTML(item[:book] ? item[:book] : "")}
+        </div>
 
       <div class="text original">
         <p>
 #{item[:original]}
         </p>
       </div>
+
+      <button class="toggle-translation" type="button">
+        Deutsche Übersetzung anzeigen
+      </button>
 
       <div class="text translation" hidden>
         <p>
@@ -68,11 +76,17 @@ index.each do |key, label|
 
   label = "NO TITLE" if !label
 
+  title  = label.sub(/\s*\(.+\)\s*(?:\[.+\])?\s*$/, "")
+  author = label[/\(([^)]+)\)/, 1]
+  book   = label[/\[([^\]]+)\]/, 1]
+
   item = {
     key: key,
     label: label,
     id: "poem-#{slug(key)}",
-    title: label.sub(/\s*\(.+\)\s*$/, ""),
+    title: title,#label.sub(/\s*\(.+\)\s*$/, ""),
+    author: author,
+    book: book,
     original: read_poem(it_path),
     translation: read_poem(de_path)
   }
@@ -107,7 +121,7 @@ HTML
 
 regular_items.each do |item|
   html << <<~HTML
-        <li><a href="##{item[:id]}">#{CGI.escapeHTML(item[:label])}</a></li>
+        <li><a href="##{item[:id]}">#{CGI.escapeHTML(item[:title])}</a></li>
   HTML
 end
 
@@ -167,6 +181,16 @@ end
 end
 
 html<< "<hr><h2>Trattenimenti da Villa</h2>"
+
+html << <<~HTML
+<div class="poem-author">
+  Adriano Banchieri
+</div>
+
+<div class="poem-book">
+  Venezia, 1630
+</div>
+HTML
 
 (camera_items).each do |item|
   html << gen_item_html(item, true)

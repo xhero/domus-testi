@@ -83,7 +83,7 @@ body {
 }
 
 .poem h2 {
-    margin-bottom: 12px;
+    margin: 0;
     font-size: 1.7rem;
     font-weight: normal;
     letter-spacing: 0.02em;
@@ -96,6 +96,17 @@ body {
     letter-spacing: 0.02em;
 }
 
+.poem-author {
+    font-size: 1.2rem;
+    color: var(--muted);
+}
+
+.poem-book {
+    margin-top: 0.15rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--muted);
+}
 .toggle-translation {
     margin-bottom: 24px;
     padding: 6px 12px;
