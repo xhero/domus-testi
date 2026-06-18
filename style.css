@@ -79,7 +79,7 @@ body {
 }
 
 .poem {
-    margin-bottom: 72px;
+    margin-bottom: 24px;
 }
 
 .poem h2 {
@@ -108,7 +108,7 @@ body {
     color: var(--muted);
 }
 .toggle-translation {
-    margin-bottom: 24px;
+    margin-top: 16px;
     padding: 6px 12px;
     border: 1px solid var(--rule);
     background: transparent;
