@@ -1,147 +1,110 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Danza di Ninfe, e Pastori</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Danza di Ninfe, e Pastori</title>
 
-        <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js"></script>
+  <link rel="stylesheet" href="score.css">
+  <script src="https://www.verovio.org/javascript/latest/verovio-toolkit-wasm.js"></script>
+</head>
 
-        <style>
-            html {
-                box-sizing: border-box;
-            }
+<body>
+  <header class="site-header">
+    <h1>Danza di Ninfe, e Pastori</h1>
 
-            *,
-            *::before,
-            *::after {
-                box-sizing: inherit;
-            }
+    <div class="controls" aria-label="Score controls">
+      <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+      <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+    </div>
 
-            body {
-                margin: 0;
-                background: #f4f4f4;
-                font-family:
-                    system-ui,
-                    -apple-system,
-                    BlinkMacSystemFont,
-                    "Segoe UI",
-                    sans-serif;
-            }
+    <div id="status">Loading…</div>
+  </header>
 
-            header {
-                position: sticky;
-                top: 0;
-                z-index: 10;
-                padding: 0.75rem 1rem;
-                background: white;
-                border-bottom: 1px solid #ddd;
-            }
+  <main>
+    <div id="score"></div>
+  </main>
 
-            header h1 {
-                margin: 0;
-                font-size: 1rem;
-                font-weight: 600;
-            }
+  <script>
+    const MEI_FILE = "score.mei";
 
-            #status {
-                margin-top: 0.25rem;
-                font-size: 0.875rem;
-                color: #666;
-            }
+    const score = document.getElementById("score");
+    const statusEl = document.getElementById("status");
+    const zoomInButton = document.getElementById("zoom-in");
+    const zoomOutButton = document.getElementById("zoom-out");
 
-            #score {
-                width: 100%;
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 1rem;
-            }
+    let toolkit = null;
+    let meiData = "";
+    let resizeTimer = null;
+    let zoomScale = Number(localStorage.getItem("scoreZoomScale")) || 38;
 
-            .page {
-                width: 100%;
-                margin-bottom: 1rem;
-                background: white;
-                overflow: hidden;
-                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-            }
+    zoomInButton.addEventListener("click", () => {
+      zoomScale = Math.min(80, zoomScale + 4);
+      localStorage.setItem("scoreZoomScale", zoomScale);
+      renderScore();
+    });
 
-            .page svg {
-                width: 100%;
-                height: auto;
-                display: block;
-            }
-        </style>
-    </head>
+    zoomOutButton.addEventListener("click", () => {
+      zoomScale = Math.max(16, zoomScale - 4);
+      localStorage.setItem("scoreZoomScale", zoomScale);
+      renderScore();
+    });
 
-    <body>
-        <header>
-            <h1>Danza di Ninfe, e Pastori</h1>
-            <div id="status">Loading…</div>
-        </header>
+    verovio.module.onRuntimeInitialized = async function () {
+      try {
+        statusEl.textContent = "Loading MEI…";
+        toolkit = new verovio.toolkit();
 
-        <main>
-            <div id="score"></div>
-        </main>
+        const response = await fetch(MEI_FILE);
+        if (!response.ok) {
+          throw new Error(`Could not load ${MEI_FILE}`);
+        }
 
-        <script>
-            const MEI_FILE = "score.mei";
+        meiData = await response.text();
+        renderScore();
 
-            const score = document.getElementById("score");
-            const statusEl = document.getElementById("status");
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(renderScore, 200);
+        });
+      } catch (error) {
+        console.error(error);
+        statusEl.textContent = error.message;
+      }
+    };
 
-            let toolkit = null;
-            let meiData = "";
-            let resizeTimer = null;
+    function renderScore() {
+      if (!toolkit || !meiData) return;
 
-            verovio.module.onRuntimeInitialized = async function () {
-                try {
-                    toolkit = new verovio.toolkit();
+      statusEl.textContent = "Rendering…";
 
-                    const response = await fetch(MEI_FILE);
-                    meiData = await response.text();
+      const containerWidth = score.clientWidth || window.innerWidth;
+      const scale = zoomScale;
 
-                    renderScore();
+      toolkit.setOptions({
+        scale: scale,
+        pageWidth: Math.round(containerWidth * 100 / scale),
+        pageHeight: 3000,
+        adjustPageHeight: true,
+        breaks: "auto",
+        footer: "none"
+      });
 
-                    window.addEventListener("resize", () => {
-                        clearTimeout(resizeTimer);
-                        resizeTimer = setTimeout(renderScore, 200);
-                    });
-                } catch (error) {
-                    console.error(error);
-                    statusEl.textContent = error.message;
-                }
-            };
+      toolkit.loadData(meiData);
 
-            function renderScore() {
-                if (!toolkit || !meiData) return;
+      const pageCount = toolkit.getPageCount();
+      score.innerHTML = "";
 
-                const containerWidth = score.clientWidth || window.innerWidth;
-                const scale = containerWidth < 700 ? 32 : 38;
+      for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+        const page = document.createElement("section");
+        page.className = "page";
+        page.setAttribute("aria-label", `Page ${pageNumber}`);
+        page.innerHTML = toolkit.renderToSVG(pageNumber, {});
+        score.appendChild(page);
+      }
 
-                toolkit.setOptions({
-                    scale,
-                    pageWidth: Math.round((containerWidth * 100) / scale),
-                    pageHeight: 3000,
-                    adjustPageHeight: true,
-                    breaks: "auto",
-                    footer: "none",
-                });
-
-                toolkit.loadData(meiData);
-
-                const pageCount = toolkit.getPageCount();
-
-                score.innerHTML = "";
-
-                for (let page = 1; page <= pageCount; page++) {
-                    const div = document.createElement("div");
-                    div.className = "page";
-                    div.innerHTML = toolkit.renderToSVG(page, {});
-                    score.appendChild(div);
-                }
-
-                statusEl.textContent = `${pageCount} page${pageCount === 1 ? "" : "s"}`;
-            }
-        </script>
-    </body>
+      statusEl.textContent = `${pageCount} page${pageCount === 1 ? "" : "s"} · zoom ${scale}`;
+    }
+  </script>
+</body>
 </html>
