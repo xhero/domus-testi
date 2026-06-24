@@ -205,9 +205,18 @@ html = <<~HTML
   <main class="book">
     <header class="site-header">
       <h1>Una serata principesca</h1>
-      <p>Divertimenti und Musik an den Adelshöfen von Bologna</p>
-      <p>Domus Artis & Il Madrigalone</p>
+      <p><h5>Divertimenti und Musik an den Adelshöfen von Bologna</h5></p>
+      <p><h4>Domus Artis & Il Madrigalone</h4></p>
+
+      <p>
+          Samstag, 27. Juni 2026 19.30 Uhr<br>
+          Kath. Kirche St. Martin, Egerkingen (SO)<br>
+          <br>
+          Sonntag, 28. Juni 2026 17 Uhr<br>
+          Zunftsaal Schmiedenhof, Basel<br>
+      </p>
     </header>
+
 
     <nav class="section-jump" aria-label="Section navigation">
       <a href="#notes">PROGRAMM</a>
@@ -308,6 +317,8 @@ end
 
 html << <<~HTML
   </main>
+
+  <h4>Alle Texte ©️ 2026 Domus Artis & Il Madrigalone</h4>
 
   <script src="script.js"></script>
 </body>
