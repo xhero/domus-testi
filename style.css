@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background: #d8d0c0;
@@ -46,6 +50,103 @@ body {
     color: var(--muted);
     font-size: 0.95rem;
     font-style: italic;
+}
+
+.section-jump {
+    position: sticky;
+    top: 12px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 0 32px;
+    padding: 10px 0;
+    background: rgba(247, 241, 228, 0.88);
+    backdrop-filter: blur(4px);
+}
+
+.section-jump a {
+    min-width: 92px;
+    padding: 8px 14px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink);
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    font-size: 0.8rem;
+}
+
+.section-jump a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.notes-section,
+.texts-section {
+    scroll-margin-top: 80px;
+}
+
+.notes-section {
+    margin-bottom: 60px;
+}
+
+.notes-section h2 {
+    margin: 0 0 18px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+}
+
+.note-group {
+    margin-bottom: 26px;
+}
+
+.note-block {
+    padding: 4px 0 0;
+    margin: 0;
+}
+
+.note-block summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 1.08rem;
+    font-style: italic;
+    list-style: none;
+}
+
+.note-block summary::-webkit-details-marker {
+    display: none;
+}
+
+.note-block summary::before {
+    content: "+";
+    width: 1em;
+    color: var(--accent);
+    font-weight: bold;
+    font-style: normal;
+    font-size: 1.05em;
+}
+
+.note-block[open] summary::before {
+    content: "–";
+}
+
+.note-block-body {
+    padding: 12px 0 0 1.6rem;
+    color: var(--ink);
+}
+
+.note-block-body p {
+    margin: 0 0 1em;
+}
+
+.note-block-body p:last-child {
+    margin-bottom: 0;
 }
 
 .index {

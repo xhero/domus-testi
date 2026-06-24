@@ -16,6 +16,10 @@ require "fileutils"
 
 INPUT_DIR = "input"
 OUTPUT_FILE = "index.html"
+NOTES_CANDIDATES = [
+  File.join(INPUT_DIR, "notes.md"),
+  "notes.md"
+].freeze
 
 index = YAML.load_file(File.join(INPUT_DIR, "index.yml"))
 
@@ -24,6 +28,93 @@ def read_poem(path)
       .lines
       .map(&:chomp)
       .join("<br />\n")
+end
+
+def read_markdown(path)
+  return "" unless File.exist?(path)
+
+  File.read(path, encoding: "UTF-8")
+end
+
+def markdown_blocks(markdown)
+  markdown
+    .split(/\n{2,}/)
+    .map(&:strip)
+    .reject(&:empty?)
+end
+
+def markdown_inline(text)
+  normalized = text.gsub(/\\([\\`*_{}\[\]()#+\-.!>])/, "\\1")
+  rendered = CGI.escapeHTML(normalized)
+
+  rendered = rendered.gsub(/`([^`]+)`/) do
+    "<code>#{$1}</code>"
+  end
+
+  rendered = rendered.gsub(/\[([^\]]+)\]\(([^)]+)\)/) do
+    label = $1
+    url = CGI.escapeHTML($2)
+    %(<a href="#{url}">#{label}</a>)
+  end
+
+  rendered = rendered.gsub(/\*\*([^*]+)\*\*/, "<strong>\\1</strong>")
+  rendered = rendered.gsub(/(^|[^*])\*([^*]+)\*(?!\*)/, '\1<em>\2</em>')
+
+  rendered
+end
+
+def parse_notes(markdown)
+  groups = []
+  current = nil
+
+  markdown_blocks(markdown).each do |block|
+    if (match = block.match(/^\*([^*]+)\*$/m))
+      current = {
+        title: match[1].strip,
+        paragraphs: []
+      }
+      groups << current
+    else
+      current ||= {
+        title: nil,
+        paragraphs: []
+      }
+      current[:paragraphs] << block
+    end
+  end
+
+  groups
+end
+
+def render_markdown_paragraphs(markdown)
+  groups = parse_notes(markdown)
+  return "" if groups.empty?
+
+  groups.each_with_index.map do |group, _group_index|
+    group_title = group[:title] || "Paragrafo"
+    group_id = "note-#{slug(group_title)}"
+
+    paragraphs_html = group[:paragraphs].map do |block|
+      content = block
+                .lines
+                .map(&:rstrip)
+                .map { |line| markdown_inline(line) }
+                .join("<br />\n")
+
+      "<p>#{content}</p>"
+    end.join("\n")
+
+    <<~HTML
+      <section class="note-group" id="#{group_id}">
+        <details class="note-block">
+          <summary>#{CGI.escapeHTML(group_title)}</summary>
+          <div class="note-block-body">
+            #{paragraphs_html}
+          </div>
+        </details>
+      </section>
+    HTML
+  end.join("\n")
 end
 
 def slug(key)
@@ -67,6 +158,9 @@ end
 
 regular_items = []
 camera_items = []
+notes_path = NOTES_CANDIDATES.find { |path| File.exist?(path) } || NOTES_CANDIDATES.first
+notes_markdown = read_markdown(notes_path)
+notes_html = render_markdown_paragraphs(notes_markdown)
 
 index.each do |key, label|
   it_path = File.join(INPUT_DIR, "#{key}.it.txt")
@@ -114,9 +208,24 @@ html = <<~HTML
       <p>Trattenimenti da Villa e Madrigali Italiani</p>
     </header>
 
-    <nav class="index">
-      <h2>Inhaltsverzeichnis</h2>
-      <ol>
+    <nav class="section-jump" aria-label="Section navigation">
+      <a href="#notes">NOTES</a>
+      <a href="#texts">TEXT</a>
+    </nav>
+
+    <section class="notes-section" id="notes">
+      <h2>Programmhinweise</h2>
+HTML
+
+html << notes_html
+
+html << <<~HTML
+    </section>
+
+    <section id="texts" class="texts-section">
+      <nav class="index">
+        <h2>Inhaltsverzeichnis</h2>
+        <ol>
 HTML
 
 regular_items.each do |item|
