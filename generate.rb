@@ -210,7 +210,7 @@ html = <<~HTML
     </header>
 
     <nav class="section-jump" aria-label="Section navigation">
-      <a href="#notes">PROGRAMMHINWEISE</a>
+      <a href="#notes">PROGRAMM</a>
       <a href="#texts">TEXTE</a>
     </nav>
 
