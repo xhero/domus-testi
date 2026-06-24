@@ -108,7 +108,7 @@ def render_markdown_paragraphs(markdown)
       <section class="note-group" id="#{group_id}">
         <details class="note-block">
           <summary>#{CGI.escapeHTML(group_title)}</summary>
-          <div class="note-block-body">
+          <div class="note-block-body" lang="de">
             #{paragraphs_html}
           </div>
         </details>
@@ -205,12 +205,13 @@ html = <<~HTML
   <main class="book">
     <header class="site-header">
       <h1>Una serata principesca</h1>
-      <p>Trattenimenti da Villa e Madrigali Italiani</p>
+      <p>Divertimenti und Musik an den Adelshöfen von Bologna</p>
+      <p>Domus Artis & Il Madrigalone</p>
     </header>
 
     <nav class="section-jump" aria-label="Section navigation">
-      <a href="#notes">NOTES</a>
-      <a href="#texts">TEXT</a>
+      <a href="#notes">PROGRAMMHINWEISE</a>
+      <a href="#texts">TEXTE</a>
     </nav>
 
     <section class="notes-section" id="notes">
@@ -224,7 +225,7 @@ html << <<~HTML
 
     <section id="texts" class="texts-section">
       <nav class="index">
-        <h2>Inhaltsverzeichnis</h2>
+        <h2>Inhaltsverzeichnis der Texte</h2>
         <ol>
 HTML
 
