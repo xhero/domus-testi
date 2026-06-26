@@ -221,6 +221,9 @@ html = <<~HTML
     <nav class="section-jump" aria-label="Section navigation">
       <a href="#notes">PROGRAMM</a>
       <a href="#texts">TEXTE</a>
+      <a href="score.html" target="_blank" rel="noopener">
+        NOTEN
+      </a>
     </nav>
 
     <section class="notes-section" id="notes">

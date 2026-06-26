@@ -53,3 +53,5 @@ Banchieri erklärte, dass der Zweck seiner Komödien „zu keinem anderen Zweck 
 Die Themen der Lieder spiegeln das Leben der jungen Leute wider, über die sie erzählen: Festgelage, Liebe und Essen, mitunter mit erotischen Anklängen. Dichter Humor und Satire des Alltags sind präsent und zeichnen das Bild einer fröhlichen Gesellschaft mit Tanz und Spielen. 
 
 Die Trattenimenti sind Banchieris letzte bekannte Veröffentlichung aus dem Jahr 1630\. Musikalisch verarbeiten mehrere Stücke Material aus dem *Zabaione musicale* (1604), das für die moderne Praxis aktualisiert wurde. So wurde beispielsweise der Basso continuo hinzugefügt, der in der früheren Fassung noch nicht vorhanden war. Banchieri scheut nun gelegentlich nicht vor einer Arie oder einem Duett in der *seconda pratica* zurück und wechselt sie mit traditionelleren polyphonen Canzonetten ab. Oft werden die Stile der Canzonetta und des Madrigals vermischt, um komische Effekte zu erzielen, indem zum Beispiel ernste Musik auf einen nicht ganz so ernsten Text gesetzt wird.
+
+***Rodolfo Zitellini***
