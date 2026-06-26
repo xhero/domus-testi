@@ -237,7 +237,7 @@ html << <<~HTML
 
     <section id="texts" class="texts-section">
       <nav class="index">
-        <h2>Inhaltsverzeichnis der Texte</h2>
+        <h2>Texte</h2>
         <ol>
 HTML
 
